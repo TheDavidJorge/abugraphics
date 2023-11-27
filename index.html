@@ -80,15 +80,15 @@
 
 
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex flex-column justify-content-center">
-    <div class="container" data-aos="zoom-in" data-aos-delay="100">
-      <h1>Abu Fernando</h1>
-      <p>Sou <span class="typed" data-typed-items="Designer, Desenvolvedor, Freelancer, Fotografo"></span></p>
-    
-      
-    </div>
-  </section><!-- End Hero -->
+
+      <!-- ======= Hero Section ======= -->
+      <section id="hero" class="d-flex flex-column justify-content-center">
+        <div class="container" data-aos="zoom-in" data-aos-delay="100">
+          <p>Sou<span id="typed" class="typed"></span></p>
+          <h1 id="typed-text"></h1>
+          
+        </div>
+      </section><!-- End Hero -->
 
 
   <!-- ======= Hero Section ======= -->
@@ -469,20 +469,39 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/hero/main.js"></script>
-
   <script>
-    // Hero typed
-if ($('.typed').length) {
-  var typed_strings = $(".typed").data('typed-items');
-  typed_strings = typed_strings.split(',')
-  new Typed('.typed', {
-    strings: typed_strings,
-    loop: true,
-    typeSpeed: 100,
-    backSpeed: 50,
-    backDelay: 2000
-  });
-}
+    document.addEventListener('DOMContentLoaded', function () {
+      const typedText = document.getElementById('typed-text');
+      const typedSpan = document.getElementById('typed','typed-text');
+      const items = ['Designer', 'Desenvolvedor', 'Freelancer', 'Fotografo'];
+      let currentItem = 0;
+
+      function type() {
+        if (currentItem >= items.length) {
+          currentItem = 0;
+        }
+
+        const currentText = items[currentItem];
+        currentItem++;
+
+        typedText.innerHTML = '';
+        typedSpan.innerHTML = '';
+
+        let i = 0;
+        const typingInterval = setInterval(function () {
+          if (i < currentText.length) {
+            typedText.innerHTML += currentText.charAt(i);
+            i++;
+          } else {
+            clearInterval(typingInterval);
+            typedSpan.innerHTML = '';
+            setTimeout(type, 1000); // Delay before typing the next item
+          }
+        }, 100);
+      }
+
+      type();
+    });
   </script>
 
 </body>
